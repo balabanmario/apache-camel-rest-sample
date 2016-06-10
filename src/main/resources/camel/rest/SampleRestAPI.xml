@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+    ">
+
+    <restContext id="sampleRestAPI" xmlns="http://camel.apache.org/schema/spring">
+
+        <rest path="/sample-api">
+
+            <get uri="/sample-get/{idReq}"
+                 consumes="application/json" produces="application/json">
+                <description>Sample GET api with ID parameter</description>
+                <route>
+                    <log message="GET Request handled ${header.idReq}"/>
+                    <to uri="direct:bar"/>
+                </route>
+            </get>
+            <post uri="/sample-post" consumes="application/json"
+                  produces="application/json">
+                <description>Sample POST api</description>
+                <route>
+                    <log message="POST Request handled ${body}"/>
+                    <to uri="direct:bar"/>
+                </route>
+            </post>
+
+        </rest>
+
+    </restContext>
+
+</beans>
